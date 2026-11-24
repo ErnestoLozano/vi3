@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vi3"
+version = "0.1.0"
+description = "Inertial cues for pretrained 3D foundation models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Ernesto Lozano" }, { name = "Alberto Jaenal" }, { name = "Javier Civera" }]
+dependencies = [
+    # Core
+    "numpy<2",
+    "pandas",
+    "scipy",
+    "matplotlib",
+    "opencv-python",
+    "Pillow",
+    # Deep learning. torch/torchvision are intentionally unpinned here: install
+    # the CUDA build matching your machine first (see README), then `pip install
+    # -e .`. Verified on torch 2.5–2.11 / CUDA 12.x.
+    "torch>=2.5",
+    "torchvision",
+    "pypose",
+    # GeoCalib (single-image gravity for the GT-free init) depends on kornia.
+    "kornia",
+    # DA3 (Depth-Anything-3) imports its config + export/eval utilities eagerly.
+    "omegaconf",
+    "addict",
+    "plyfile",
+    "moviepy",
+    "pycolmap",
+    "trimesh",
+    "evo",
+    # FoundationModel runtime deps (VGGT/VGGT-Omega/Pi3 load via huggingface_hub).
+    "huggingface_hub",
+    "einops",
+    "safetensors",
+    # Any4D (built through its vendored Hydra config on the UniCeption stack).
+    "hydra-core",
+    "uniception",
+    "jaxtyping",
+    "timm",
+    # 3D visualization (vi3.viz, `scripts/run.py --viz`).
+    "rerun-sdk>=0.20",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vi3*"]
+# Only the `vi3` package is installable; the vendored foundation models (third_party/)
+# and scripts/ are not part of it.
+exclude = ["third_party*", "scripts*"]

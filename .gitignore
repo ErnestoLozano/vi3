@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Venv
+.venv/
+venv/
+env/
+
+# Build
+build/
+dist/
+*.whl
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Datasets (scripts/download_data.py)
+/data/
+
+# Experiment outputs (regenerable)
+results/
+results_*/
+*.log
+*.rrd
+
+# Model checkpoints (local copies; too large to track)
+ckpt/
+*.pt
+*.pth
+*.safetensors
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# fetched by scripts/fetch_third_party.py (not redistributed)
+third_party/vggt-omega/

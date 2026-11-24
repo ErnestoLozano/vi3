@@ -1,0 +1,46 @@
+# Exact runtime versions vi3 is verified with (Python 3.10, CUDA 12.x).
+#
+# NOTE on numpy: the foundation models (VGGT / VGGT-Omega) require numpy < 2, but
+# rerun-sdk 0.24 declares a numpy>=2 floor it does not actually need at runtime
+# (numpy 1.26 + rerun 0.24 run fine together). uniception (Any4D's encoder stack)
+# likewise declares deps vi3 never imports (torchaudio, minio, ...). So install
+# both WITHOUT their deps, as in the README:
+#     pip install "rerun-sdk==0.24.1" "uniception==0.1.7" --no-deps
+#
+# torch / torchvision are the CUDA-matched build — install them FIRST, from the
+# PyTorch index (see README), not from here.
+torch==2.11.0
+torchvision==0.26.0
+
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.15.3
+matplotlib==3.10.8
+opencv-python==4.11.0.86
+Pillow==11.3.0
+pypose==0.9.5
+huggingface_hub==1.14.0
+einops==0.8.2
+safetensors==0.7.0
+pyarrow==25.0.1        # rerun-sdk's runtime deps (rerun is installed --no-deps)
+attrs==26.1.0
+kornia==0.8.2          # required by GeoCalib (single-image gravity for GT-free init)
+kornia_rs==0.1.10      # kornia's io backend
+
+# DA3 (Depth-Anything-3) pulls these at import time (config + its export/eval
+# utilities are imported eagerly even though vi3 does not use the export paths):
+omegaconf==2.3.0
+addict==2.4.0
+antlr4-python3-runtime==4.9.3   # omegaconf's parser backend
+plyfile==1.1.3         # also used by the EuRoC Leica-depth loader
+moviepy==1.0.3
+pycolmap==4.1.1
+trimesh==4.11.5
+evo==1.37.0
+
+# Any4D: built from its vendored Hydra config; uniception (installed --no-deps,
+# see above) needs only these at import time.
+hydra-core==1.3.5
+jaxtyping==0.3.7
+wadler_lindig==0.1.7   # jaxtyping's pretty-printer
+timm==1.0.25
